@@ -99,6 +99,9 @@ padding: 20px 0 20px 0;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
 
+    /* no underline */
+    text-decoration: none;
+
 }
 .write-btn:hover{
     background-color: var(--btn-primary-hover);
