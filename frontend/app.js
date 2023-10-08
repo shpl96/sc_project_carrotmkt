@@ -2,13 +2,17 @@
 
 async function handleSubmitForm(event){
     event.preventDefault();
+
+    const body= new FormData(form);
+    body.append("insertat", new Date().getTime())
+
     //try catch 구문 사용, try and if it doesnt work, e in catch
     try {
         
          //post item on server
     const res= await fetch("/items",{
         method: "POST", 
-        body: new FormData(form), 
+        body: body, 
     });
 
     //to go back to root page after uploading item

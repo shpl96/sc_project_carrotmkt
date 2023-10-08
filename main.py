@@ -9,12 +9,15 @@ cur= con.cursor()
 
 app = FastAPI()
 
+#POST ON SERVER
 @app.post("/items")
 async def create_item(image:UploadFile, 
                 title: Annotated[str, Form()], #form형식으로 str으로 정보가 올 것이다.
                 price: Annotated[int, Form()], 
                 description: Annotated[str, Form()], 
-                place: Annotated[str, Form()]):
+                place: Annotated[str, Form()],
+                insertat: Annotated[int, Form()]
+                ):
     
     #image is very big, so time necessary to read
     image_bytes= await image.read()
@@ -22,12 +25,12 @@ async def create_item(image:UploadFile,
     #""""""is like backtick in js
     #hex는 16진법으로 바꿔주는 기능
     cur.execute(f"""
-                INSERT INTO items(title, image, price, description, place)
-                VALUES ("{title}", "{image_bytes.hex()}", {price}, "{description}", "{place}")
+                INSERT INTO items(title, image, price, description, place, insertat)
+                VALUES ("{title}", "{image_bytes.hex()}", {price}, "{description}", "{place}", {insertat})
                 """)
     con.commit()
 
-    print(image, title, price, description, place)
+    print(image, title, price, description, place, insertat)
     return "200"
 
 
