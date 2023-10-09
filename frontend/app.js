@@ -17,7 +17,8 @@ async function handleSubmitForm(event){
 
     //to go back to root page after uploading item
     const data= await res.json();
-    if (data === "200") window.location.pathname= "/";
+    if (data === "200") 
+    window.location.pathname= "/login.html";
 
     }catch(e){
     console.error(e);

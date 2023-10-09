@@ -23,6 +23,8 @@ manager= LoginManager(SECRET, "/login")
 @manager.user_loader()
 
 def query_user(id):
+    con.row_factory= sqlite3.Row
+    cur= con.cursor()
     user= cur.execute(f"""
                     SELECT * from users WHERE id= "{id}"
                     """).fetchone()
@@ -31,14 +33,23 @@ def query_user(id):
 @app.post("/login")
 def login(id: Annotated[str, Form()],
             password: Annotated[str, Form()]
-):
+            ):
     user= query_user(id)
+    print(user)
     #유저가 없으면 error메세지 보내라 = raise
+    #elif password 틀리면 error raise
     if not user:
         raise InvalidCredentialsException
     elif password != user["password"]:
         raise InvalidCredentialsException
-    return "200"
+    
+    #return access token so server can remember the user
+    access_token= manager.create_access_token(data={
+        "id": user["id"],
+        "name": user["name"],
+        "email": user["email"]
+    })
+    return {"access_token": access_token}
 
 #signup page
 @app.post("/signup")
