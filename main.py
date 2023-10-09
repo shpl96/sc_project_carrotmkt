@@ -5,12 +5,54 @@ import sqlite3
 #for GET, need to import JSONresponse
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
+#login
+from fastapi_login import LoginManager
+#error
+from fastapi_login.exceptions import InvalidCredentialsException
 
 #sqlite settings
 con = sqlite3.connect("db.db", check_same_thread=False)
 cur= con.cursor()
 
 app = FastAPI()
+
+#login manager
+SECRET= "soheetheprogrammer"
+manager= LoginManager(SECRET, "/login")
+
+@manager.user_loader()
+
+def query_user(id):
+    user= cur.execute(f"""
+                    SELECT * from users WHERE id= "{id}"
+                    """).fetchone()
+    return user
+
+@app.post("/login")
+def login(id: Annotated[str, Form()],
+            password: Annotated[str, Form()]
+):
+    user= query_user(id)
+    #유저가 없으면 error메세지 보내라 = raise
+    if not user:
+        raise InvalidCredentialsException
+    elif password != user["password"]:
+        raise InvalidCredentialsException
+    return "200"
+
+#signup page
+@app.post("/signup")
+def signup(id: Annotated[str, Form()],
+            password: Annotated[str, Form()],
+            name: Annotated[str, Form()],
+            email: Annotated[str,Form()]
+            ):
+    cur.execute(f"""
+                    INSERT INTO users(id, name, email, password)
+                    VALUES('{id}', '{name}', '{email}', '{password}')
+                    """)
+    con.commit()
+    return "200"
 
 #POST ON SERVER
 @app.post("/items")
@@ -57,19 +99,7 @@ async def get_img(item_id):
     #change 16진법 to 우리가 보는 이미지
     return Response(content= bytes.fromhex(image_bytes))
 
-#signup page
-@app.post("/signup")
-def signup(id: Annotated[str, Form()],
-            password: Annotated[str, Form()],
-            name: Annotated[str, Form()],
-            email: Annotated[str,Form()]
-            ):
-    cur.execute(f"""
-                    INSERT INTO users(id, name, email, password)
-                    VALUES('{id}', '{name}', '{email}', '{password}')
-                    """)
-    con.commit()
-    return "200"
+
 
 
 app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")

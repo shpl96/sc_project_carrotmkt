@@ -33,7 +33,7 @@ const handleSubmit= async (event) =>{
     });
     const data= await res.json()
         if (data === "200"){
-            alert("succeed in sign in, now you can log in")
+            alert("succeed in sign in, now you can log in");
             window.location.pathname = "/login.html";
         }
     } else{
