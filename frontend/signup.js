@@ -25,16 +25,18 @@ const handleSubmit= async (event) =>{
 
     //check password
     if (checkPassword()){
-        //hide message
-        div.innerText= "";
 
     //POST on server
     const res= await fetch("/signup",{
         method: "post",
         body: formData,
-
-    
     });
+    const data= await res.json()
+        if (data === "200"){
+            //hide message
+            div.innerText= "회원가입에 성공했습니다.";
+            div.style.color = "blue";
+        }
     } else{
         div.innerText= "비밀번호가 일치하지 않습니다. "
     }
