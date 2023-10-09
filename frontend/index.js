@@ -20,7 +20,7 @@ const renderData= (data) =>{
     
     //배열 내부의 값을 하나씩 돌면서 다음 명령을 수행 => for each
     // 가장 처음 올린 것이 밑으로, 마지막에 올린 것이 위로 => reverse
-    data.reverse().forEach((obj) => {
+    data.reverse().forEach(async(obj) => {
         //add div to HTML >> get title from server using for each >> append div to main
         const mainBoxList= document.createElement("div");
         mainBoxList.className = "main-box-list";
@@ -28,7 +28,11 @@ const renderData= (data) =>{
         const boxImg= document.createElement("div");
         boxImg.className= "box-img";
         const img= document.createElement("img");
-        img.src= "assets/image.svg";
+        //change blob image to image we wwant to show
+        const res= await fetch(`/images/${obj.id}`)
+        const blob= await res.blob();
+        const url= URL.createObjectURL(blob);
+        img.src= url;
 
         //create description box
         const boxDesc= document.createElement("div");
