@@ -57,6 +57,14 @@ async def get_img(item_id):
     #change 16진법 to 우리가 보는 이미지
     return Response(content= bytes.fromhex(image_bytes))
 
+#signup page
+@app.post("/signup")
+def signup(id: Annotated[str, Form()],
+           password: Annotated[str, Form()]
+           ):
+    print(id, password)
+    return "200"
+
 
 app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
 
