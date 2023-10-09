@@ -33,9 +33,8 @@ const handleSubmit= async (event) =>{
     });
     const data= await res.json()
         if (data === "200"){
-            //hide message
-            div.innerText= "회원가입에 성공했습니다.";
-            div.style.color = "blue";
+            alert("succeed in sign in, now you can log in")
+            window.location.pathname = "/login.html";
         }
     } else{
         div.innerText= "비밀번호가 일치하지 않습니다. "
