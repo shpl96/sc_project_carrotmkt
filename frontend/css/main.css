@@ -1,5 +1,5 @@
 main{
-padding: 20px 0 20px 0;
+padding: 20px 0 100px 0;
 }
 
 :root{
@@ -26,9 +26,11 @@ padding: 20px 0 20px 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 .box-img img{
-    width: 50px;
+    width: 100%;
+    height: auto;
 }
 .box-desc{
     display: flex;
