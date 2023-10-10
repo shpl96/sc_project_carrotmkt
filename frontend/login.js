@@ -1,6 +1,5 @@
 const form= document.querySelector("#login-form");
 
-let accessToken = null;
 
 const handleSubmit= async (event) =>{
     event.preventDefault();
@@ -18,13 +17,15 @@ const handleSubmit= async (event) =>{
 
     //access token
     const data= await res.json()
-    accessToken= data.acces_token;
+    const accessToken= data.acces_token;
     console.log(accessToken);
+    window.localStorage.setItem("token", accessToken);
+    window.sessionStorage.setItem("token", accessToken);
 
     const infoDiv= document.querySelector("#info");
     infoDiv.innerText = "login succeed"
 
-    window.location.pathname= "/";
+    //window.location.pathname= "/";
 
     // const btn= document.createElement("button");
     // btn.innerText= "get item";
