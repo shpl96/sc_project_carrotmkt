@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, Form, Response
+from fastapi import FastAPI, UploadFile, Form, Response, Depends
 from fastapi.staticfiles import StaticFiles
 from typing import Annotated
 import sqlite3
@@ -45,9 +45,11 @@ def login(id: Annotated[str, Form()],
     
     #return access token so server can remember the user
     access_token= manager.create_access_token(data={
-        "id": user["id"],
+        "sub":{
+            "id": user["id"],
         "name": user["name"],
         "email": user["email"]
+        }
     })
     return {"access_token": access_token}
 
@@ -90,7 +92,9 @@ async def create_item(image:UploadFile,
     return "200"
 
 @app.get("/items")
-async def get_items():
+#access token 추가
+async def get_items(user= Depends(manager)):
+    print(user)
     #bring column name(각 값들이 무엇을 의미하는지 알기 위해)
     con.row_factory= sqlite3.Row
     #bring data, in form of array
