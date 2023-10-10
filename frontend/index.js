@@ -1,4 +1,4 @@
-//add time meta info
+ //add time meta info
 const calcTime = (timestamp) =>{
     const curTime= new Date().getTime() -9*60*60*1000;
     const time= new Date(curTime - timestamp);
@@ -71,6 +71,13 @@ const renderData= (data) =>{
 //GET data from server
 const fetchList= async () => {
     const res= await fetch('/items');
+
+    if (res.status === 401){
+        alert("need to log in");
+        window.location.pathname = "/login.html";
+        return;
+        } 
+        
     const data= await res.json();
     renderData(data);
 }

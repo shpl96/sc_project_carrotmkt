@@ -24,14 +24,21 @@ const handleSubmit= async (event) =>{
     const infoDiv= document.querySelector("#info");
     infoDiv.innerText = "login succeed"
 
-    const btn= document.createElement("button");
-    btn.innerText= "get item"
-    btn.addEventListener("click", async ()=>{
-        const res= await fetch ("/items");
-        const data= await res.json();
-        console.log(data);
-    });
-    infoDiv.appendChild(btn);
+    window.location.pathname= "/";
+
+    // const btn= document.createElement("button");
+    // btn.innerText= "get item";
+    // btn.addEventListener("click", async ()=>{
+    //     const res= await fetch ("/items", {
+    //         //add access token to header
+    //         headers:{
+    //             Authorization: `Bearer ${accessToken}`,
+    //         },
+    //     });
+    //     const data= await res.json();
+    //     console.log(data);
+    // });
+    // infoDiv.appendChild(btn);
 
     //server에 id, password 보냈을 때 맞으면 200, 틀리면 401받아서 그에 따른 반응
         //if (res.status === 200){

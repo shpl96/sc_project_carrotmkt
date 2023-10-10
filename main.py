@@ -21,12 +21,15 @@ SECRET= "soheetheprogrammer"
 manager= LoginManager(SECRET, "/login")
 
 @manager.user_loader()
+def query_user(data):
+    WHERE_STATEMENT = f'id="{data}"' 
+    if type (data) == dict:
+        WHERE_STATEMENT = f'name="{data["name"]}"'
 
-def query_user(id):
     con.row_factory= sqlite3.Row
     cur= con.cursor()
     user= cur.execute(f"""
-                    SELECT * from users WHERE id= "{id}"
+                    SELECT * from users WHERE {WHERE_STATEMENT}
                     """).fetchone()
     return user
 
@@ -92,7 +95,7 @@ async def create_item(image:UploadFile,
     return "200"
 
 @app.get("/items")
-#access token 추가
+#access token 추가, 인증되어야지만 아래 명령 보내줄거야
 async def get_items(user= Depends(manager)):
     print(user)
     #bring column name(각 값들이 무엇을 의미하는지 알기 위해)
