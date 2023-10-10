@@ -18,12 +18,12 @@ const handleSubmit= async (event) =>{
     //access token
     const data= await res.json()
     const accessToken= data.acces_token;
-    console.log(accessToken);
     window.localStorage.setItem("token", accessToken);
-    window.sessionStorage.setItem("token", accessToken);
+    alert("login succeeded with access token")
 
-    const infoDiv= document.querySelector("#info");
-    infoDiv.innerText = "login succeed"
+
+    // const infoDiv= document.querySelector("#info");
+    // infoDiv.innerText = "login succeed"
 
     //window.location.pathname= "/";
 

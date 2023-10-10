@@ -97,7 +97,6 @@ async def create_item(image:UploadFile,
 @app.get("/items")
 #access token 추가, 인증되어야지만 아래 명령 보내줄거야
 async def get_items(user= Depends(manager)):
-    print(user)
     #bring column name(각 값들이 무엇을 의미하는지 알기 위해)
     con.row_factory= sqlite3.Row
     #bring data, in form of array
