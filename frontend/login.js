@@ -14,8 +14,12 @@ const handleSubmit= async (event) =>{
         method: "post",
         body: formData,
     });
+
+    //access token
     const data= await res.json()
-    console.log(data);
+    const accessToken= data.acces_token;
+
+    //server에 id, password 보냈을 때 맞으면 200, 틀리면 401받아서 그에 따른 반응
         if (res.status === 200){
             alert("login success");
             window.location.pathname = "/";
@@ -31,10 +35,6 @@ const handleSubmit= async (event) =>{
             //alert("login failed");
             //window.location.pathname = "/login.html";
             //}
-
-        
-        
-
 
 
     };
