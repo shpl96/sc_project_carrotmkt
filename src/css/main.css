@@ -1,0 +1,109 @@
+main{
+padding: 20px 0 100px 0;
+}
+
+:root{
+    --btn-primary: rgb(254, 111, 15);
+    --btn-primary-hover: rgba(254, 111, 15, 0.5);
+}
+
+.main-box-list{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    margin: 10px;
+    border-bottom: 1px solid #ededef;
+}
+
+/* inside box */
+.box-img{
+    margin: 10px;
+    width: 150px;
+    height: 150px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.box-img img{
+    width: 100%;
+    height: auto;
+}
+.box-desc{
+    display: flex;
+    flex-direction: column;
+    justify-content:start;
+    align-items: start;
+    margin: auto;
+    margin-bottom: 10px;
+    height: 120px;
+    width:70%;
+    flex-basis: auto;
+    padding: 20px 5px 20px 5px;
+}
+
+/* box-items */
+.desc-title{
+    padding: 5px;
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+/* meta(location & time) */
+.desc-meta{
+    margin: 5px ;
+    display: flex;
+    flex-direction: row;
+    font-size: small;
+    color: #D3D3D3;
+}
+
+/* price */
+.desc-price{
+    margin: 5px ;
+    font-size: medium;
+    font-weight: 900;
+}
+
+/* icons */
+.desc-icon{
+    display: flex;
+    justify-content: flex-end;
+    margin-left: auto;
+    margin-bottom: auto;
+}
+.desc-icon img{
+    margin: 3px;
+    width: 15px;
+}
+
+
+/* write btn */
+.write-btn{
+    position: fixed;
+    bottom: 120px;
+    right: 10px;
+
+    width: 80px;
+    height: 25px;
+    background-color: var(--btn-primary) ;
+    border-radius: 50px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    padding: 15px 15px 10px 15px;
+
+    /* when pointer */
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    text-decoration: none;
+
+}
+.write-btn:hover{
+    background-color: var(--btn-primary-hover);
+}
