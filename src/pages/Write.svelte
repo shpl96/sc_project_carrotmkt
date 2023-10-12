@@ -1,3 +1,8 @@
+<script>
+  
+</script>
+
+
 <form id="write-form">
   <div>
     <!-- image -->

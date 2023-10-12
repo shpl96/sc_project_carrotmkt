@@ -1,8 +1,6 @@
 <script>
   let hour = new Date().getHours();
   let min = new Date().getMinutes();
-
-  setInterval(() => (min = min + 1), 1000);
 </script>
 
 <header>
@@ -30,7 +28,9 @@
 </header>
 
 <main>
-  <a class="write-btn" href="#/write">+ 글쓰기</a>
+  <!-- <a class="write-btn" href="#/write">+ 글쓰기</a> -->
+
+  <a class="write-btn" href="https://google.com">why</a>
 </main>
 
 <footer>
