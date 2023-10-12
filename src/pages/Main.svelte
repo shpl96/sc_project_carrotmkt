@@ -28,9 +28,7 @@
 </header>
 
 <main>
-  <!-- <a class="write-btn" href="#/write">+ 글쓰기</a> -->
-
-  <a class="write-btn" href="https://google.com">why</a>
+  <a class="write-btn" href="#/write">+ 글쓰기</a>
 </main>
 
 <footer>
