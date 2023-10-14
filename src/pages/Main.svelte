@@ -13,6 +13,7 @@
   const itemsRef = ref(db, 'items/');
 
   //글쓰기 하고 와도 추가된 페이지 바로 뜨도록 하기
+  //화면이 렌더링 될 때마다 onmount가 실행되면서 페이지 보이기
   onMount(() => {
     onValue(itemsRef, (snapshot) => {
       const data = snapshot.val();

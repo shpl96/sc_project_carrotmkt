@@ -1,6 +1,12 @@
 <script>
   import { getDatabase, ref, push } from 'firebase/database';
   import Footer from '../components/Footer.svelte';
+  import {
+    getStorage,
+    ref as refImage,
+    uploadBytes,
+    getDownloadURL,
+  } from 'firebase/storage';
 
   let title;
   let price;
@@ -20,14 +26,33 @@
     alert('your item is successfully submitted');
     window.location.hash = '/';
   }
+
+  //get blob image from server and upload to webpage
+  const storage = getStorage();
+
+  // uploadBytes(storageRef, file).then((snapshot) => {
+  //   console.log('Uploaded a blob or file!');
+  // });
+
+  let files;
+  const uploadFile = async () => {
+    //upload image
+    const file = files[0];
+    const name = file.name;
+    const imageRef = refImage(storage, name);
+    const res = await uploadBytes(imageRef, file);
+    //get uploaded image
+    const url = await getDownloadURL(imageRef);
+    console.log('응답', url);
+  };
 </script>
 
 <form id="write-form" on:submit|preventDefault={writeUserData}>
   <!-- image -->
-  <!-- <div>
+  <div>
     <label for="image">image</label>
-    <input type="file" id="image" name="image" />
-  </div> -->
+    <input type="file" bind:files id="image" name="image" />
+  </div>
 
   <div>
     <!-- title -->
