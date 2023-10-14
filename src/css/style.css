@@ -34,3 +34,9 @@ body{
         opacity: 0;
     }
 }
+
+button{
+    outline: none;
+    border: none;
+    background: none;
+}
