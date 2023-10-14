@@ -1,17 +1,23 @@
 <script>
+  import { onMount } from 'svelte';
   import Footer from '../components/Footer.svelte';
   import { getDatabase, ref, onValue } from 'firebase/database';
 
   let hour = new Date().getHours();
   let min = new Date().getMinutes();
 
+  //get data from firebase server
   $: items = [];
 
   const db = getDatabase();
   const itemsRef = ref(db, 'items/');
-  onValue(itemsRef, (snapshot) => {
-    const data = snapshot.val();
-    items = Object.values(data);
+
+  //글쓰기 하고 와도 추가된 페이지 바로 뜨도록 하기
+  onMount(() => {
+    onValue(itemsRef, (snapshot) => {
+      const data = snapshot.val();
+      items = Object.values(data);
+    });
   });
 </script>
 
@@ -41,10 +47,21 @@
 
 <main>
   {#each items as item}
-    <div>{item.title}</div>
-    <div>{item.price}</div>
-    <div>{item.description}</div>
-    <div>{item.location}</div>
+    <div class="main-box-list">
+      <div class="box-img" />
+
+      <div class="box-desc">
+        <div class="desc-title">{item.title}</div>
+
+        <div class="desc-meta">{item.place}</div>
+        <div class="desc-price">{item.price}</div>
+        <div class="desc-icon">
+          <img src="assets/mini-chat.svg" alt="mini-chat" />
+          <img src="assets/heart.svg" alt="heart" />
+        </div>
+        <!-- <div class="">{item.description}</div> -->
+      </div>
+    </div>
   {/each}
 
   <a class="write-btn" href="#/write">+ 글쓰기</a>
