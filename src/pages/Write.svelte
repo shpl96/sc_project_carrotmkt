@@ -1,5 +1,6 @@
 <script>
   import { getDatabase, ref, push } from 'firebase/database';
+  import Footer from '../components/Footer.svelte';
 
   let title;
   let price;
@@ -10,12 +11,14 @@
     const db = getDatabase();
     //set을 이용하면 제목이 같은 경우, 기존 item이 새로운 item으로 대체되어 버린다.
     //따라서 push 사용
-    push(ref(db, 'itmes/'), {
+    push(ref(db, 'items/'), {
       title: title,
       price: price,
       description: description,
       place: place,
     });
+    alert('your item is successfully submitted');
+    window.location.hash = '/';
   }
 </script>
 
@@ -57,6 +60,20 @@
 
   <!-- submit btn -->
   <div>
-    <button type="submit">submit item</button>
+    <button type="submit" class="submit-btn">submit item</button>
   </div>
 </form>
+
+<Footer location="write" />
+
+<style>
+  .submit-btn {
+    background-color: lightgray;
+    border-color: black;
+    border: 1px solid;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+</style>

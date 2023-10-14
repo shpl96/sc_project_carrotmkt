@@ -1,10 +1,22 @@
 <script>
+  import Footer from '../components/Footer.svelte';
+  import { getDatabase, ref, onValue } from 'firebase/database';
+
   let hour = new Date().getHours();
   let min = new Date().getMinutes();
+
+  $: items = [];
+
+  const db = getDatabase();
+  const itemsRef = ref(db, 'items/');
+  onValue(itemsRef, (snapshot) => {
+    const data = snapshot.val();
+    items = Object.values(data);
+  });
 </script>
 
 <header>
-  <div class="inW„fo-bar">
+  <div class="info-bar">
     <div class="info-bar__time">{hour}:{min}</div>
     <div class="info-bar__icons">
       <img src="assets/chartbar.svg" alt="chartbar-icon" />
@@ -28,45 +40,17 @@
 </header>
 
 <main>
+  {#each items as item}
+    <div>{item.title}</div>
+    <div>{item.price}</div>
+    <div>{item.description}</div>
+    <div>{item.location}</div>
+  {/each}
+
   <a class="write-btn" href="#/write">+ 글쓰기</a>
 </main>
 
-<footer>
-  <div class="footer-element">
-    <div class="footer-ele-icon">
-      <img src="assets/home.svg" alt="home-icon" />
-    </div>
-    <div class="footer-ele-name">홈</div>
-  </div>
-
-  <div class="footer-element">
-    <div class="footer-ele-icon">
-      <img src="assets/town.svg" alt="town-icon" />
-    </div>
-    <div class="footer-ele-name">동네생활</div>
-  </div>
-
-  <div class="footer-element">
-    <div class="footer-ele-icon">
-      <img src="assets/near.svg" alt="near-icon" />
-    </div>
-    <div class="footer-ele-name">내 근처</div>
-  </div>
-
-  <div class="footer-element">
-    <div class="footer-ele-icon">
-      <img src="assets/chat.svg" alt="chat-icon" />
-    </div>
-    <div class="footer-ele-name">채팅</div>
-  </div>
-
-  <div class="footer-element">
-    <div class="footer-ele-icon">
-      <img src="assets/my.svg" alt="my-icon" />
-    </div>
-    <div class="footer-ele-name">나의 당근</div>
-  </div>
-</footer>
+<Footer location="home" />
 
 <!-- when screen too big or small, show message -->
 <div class="media-info-msg">화면 사이즈를 조정해 주세요</div>
