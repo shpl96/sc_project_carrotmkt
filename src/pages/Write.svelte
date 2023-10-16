@@ -12,9 +12,13 @@
   let price;
   let description;
   let place;
+  let files;
 
-  function writeUserData() {
-    const db = getDatabase();
+  //get blob image from server and upload to webpage
+  const storage = getStorage();
+  const db = getDatabase();
+
+  async function writeUserData(imgUrl) {
     //set을 이용하면 제목이 같은 경우, 기존 item이 새로운 item으로 대체되어 버린다.
     //따라서 push 사용
     push(ref(db, 'items/'), {
@@ -22,19 +26,17 @@
       price: price,
       description: description,
       place: place,
+      insertAt: new Date().getTime(),
+      imgUrl: imgUrl,
     });
     alert('your item is successfully submitted');
     window.location.hash = '/';
   }
 
-  //get blob image from server and upload to webpage
-  const storage = getStorage();
-
   // uploadBytes(storageRef, file).then((snapshot) => {
   //   console.log('Uploaded a blob or file!');
   // });
 
-  let files;
   const uploadFile = async () => {
     //upload image
     const file = files[0];
@@ -43,11 +45,16 @@
     const res = await uploadBytes(imageRef, file);
     //get uploaded image
     const url = await getDownloadURL(imageRef);
-    console.log('응답', url);
+    return url;
+  };
+
+  const handleSubmit = async () => {
+    const url = await uploadFile();
+    writeUserData(url);
   };
 </script>
 
-<form id="write-form" on:submit|preventDefault={writeUserData}>
+<form id="write-form" on:submit|preventDefault={handleSubmit}>
   <!-- image -->
   <div>
     <label for="image">image</label>

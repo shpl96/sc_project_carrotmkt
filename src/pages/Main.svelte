@@ -17,9 +17,23 @@
   onMount(() => {
     onValue(itemsRef, (snapshot) => {
       const data = snapshot.val();
-      items = Object.values(data);
+      //reverse => latest update on top
+      items = Object.values(data).reverse();
     });
   });
+
+  const calcTime = (timestamp) => {
+    const curTime = new Date().getTime() - 9 * 60 * 60 * 1000;
+    const time = new Date(curTime - timestamp);
+    const hour = time.getHours();
+    const min = time.getMinutes();
+    const sec = time.getSeconds();
+
+    if (hour > 0) return `${hour}시간 전`;
+    else if (min > 0) return `${min}분 전`;
+    else if (sec >= 0) return `${sec}초 전`;
+    else return '방금 전';
+  };
 </script>
 
 <header>
@@ -49,12 +63,13 @@
 <main>
   {#each items as item}
     <div class="main-box-list">
-      <div class="box-img" />
-
+      <div class="box-img">
+        <img src={item.imgUrl} alt={item.title} />
+      </div>
       <div class="box-desc">
         <div class="desc-title">{item.title}</div>
 
-        <div class="desc-meta">{item.place}</div>
+        <div class="desc-meta">{item.place} {calcTime(item.insertAt)}</div>
         <div class="desc-price">{item.price}</div>
         <div class="desc-icon">
           <img src="assets/mini-chat.svg" alt="mini-chat" />
