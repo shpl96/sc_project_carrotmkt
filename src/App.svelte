@@ -23,6 +23,8 @@
   import './css/header.css';
   import './css/footer.css';
   import { onMount } from 'svelte';
+  import Loading from './pages/Loading.svelte';
+  import Mypage from './pages/Mypage.svelte';
 
   // let login = false;
 
@@ -46,6 +48,7 @@
     '/': Main,
     '/signup': Signup,
     '/write': Write,
+    '/my': Mypage,
     '*': NotFound,
   };
 
@@ -53,7 +56,7 @@
 </script>
 
 {#if isLoading}
-  <div>loading...</div>
+  <Loading />
 {:else if !$user$}
   <Login />
 {:else}
