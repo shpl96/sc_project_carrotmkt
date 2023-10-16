@@ -1,11 +1,13 @@
 <script>
   //import from firebase documentation how to make popup when login with google
   import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+  import { user$ } from '../store';
 
   const loginWithGoogle = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
+      user$.set(user);
     } catch (error) {
       console.error(error);
     }
@@ -14,6 +16,12 @@
 
   const auth = getAuth();
 </script>
+
+<div>
+  {#if $user$}
+    <div>{$user$?.displayName} login succeeded</div>
+  {/if}
+</div>
 
 <form id="login-form" action="/login" method="POST">
   <h1>WELCOME! PLEASE LOG IN</h1>

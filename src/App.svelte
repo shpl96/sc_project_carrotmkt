@@ -20,7 +20,6 @@
 
   const routes = {
     '/': Main,
-    '/login': Login,
     '/signup': Signup,
     '/write': Write,
     '*': NotFound,
