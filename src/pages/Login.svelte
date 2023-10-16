@@ -7,7 +7,10 @@
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
       user$.set(user);
+      localStorage.setItem('token', token);
     } catch (error) {
       console.error(error);
     }
